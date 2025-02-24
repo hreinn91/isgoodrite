@@ -1,0 +1,4 @@
+langchain-core
+ollama
+langchain-ollama
+setuptools
