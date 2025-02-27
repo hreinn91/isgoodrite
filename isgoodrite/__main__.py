@@ -53,8 +53,7 @@ def handle_args():
                         help='The INPUT can either be an existing file which isgoodrite will review and validate for you '
                              'or if the INPUT file does not exist then isgoodrite will write its output to a file with name INPUT given the description.')
     parser.add_argument('-f', '--diff-fancy', action='store_true',
-                        help='Use diff-so-fancy for displaying differences',
-                        default=DEFAULT_CONFIG["DIFF_SO_FANCY_ENABLED"])
+                        help='Use diff-so-fancy for displaying differences')
     parser.add_argument('-c', '--clean', action='store_true',
                         help='Removes the copy file after running the step. Typically used with --diff-so-fancy')
     parser.add_argument('-v', '--verbose', action='store_true',
@@ -85,7 +84,7 @@ def main():
 
     if file_content is None:
         output_file_name = file_name
-        model_response = query_llm_for_generation(args.model, description)
+        model_response = query_llm_for_generation(args.model, output_file_name, description)
     else:
         model_response = query_llm_for_validation(file_name, file_content, args.model, description)
         output_file_name = get_copy_name(file_name)

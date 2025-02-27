@@ -24,9 +24,16 @@ Setup this tool by installing it with:
     pip install -r requirements.txt
     pip install -e .
 
-Make sure to check the `isgoodrite/config.py` and the `OLLAMA_BASE_URL` config. 
-For most the local OLLAMA will be running on "http://localhost:11434" which is the current default. 
-This can be changed if you are serving your models on some other url. 
+### Defaults
+
+Defaults can be changed in the `isgoodrite/config.py` file. 
+
+* Make sure to check the `OLLAMA_BASE_URL` is set correctly. 
+For most the local OLLAMA will be running on "http://localhost:11434" which is the current default.
+
+* `DEFAULT_MODEL` option controls which llm model which will be used by default. 
+
+Note that you will need to reinstall the package with pip after updating the config. `pip install -e .`
 
 
 ## HOW IT WORKS
@@ -35,7 +42,15 @@ This can be changed if you are serving your models on some other url.
 
 ## Example
 
-Validate your existing Scripts
+
+**Create a new script**
+
+    isgoodrite fibonacci_sequence.py --description "Please write a python script with a function that generates a fiboncacci sequence."
+or
+
+    python -m isgoodrite fibonacci_sequence.py --description "Please write a python script with a function that generates a fiboncacci sequence."
+
+**Validate your existing Scripts**
 
     isgoodrite remove_duplicates.py -f --description "Please add a unit test"
 
@@ -43,9 +58,6 @@ or
 
     python -m isgoodrite remove_duplicates.py --description "Check for any syntax errors please"
 
-Create a new script
-
-    isgoodrite fibonacci_sequence.py --description "Please write a python script with a function that generates a fiboncacci sequence."
 
 ### INTEGRATE WITH DIFF-SO-FANCY
 

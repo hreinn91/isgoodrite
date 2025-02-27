@@ -40,9 +40,9 @@ def query_llm_for_validation(file_name, file_content, model_name, description):
     answer = prompt_model(llm, input=f"I have code in a file named {file_name}. {description}: \n {file_content}")
     return ModelResponse(answer)
 
-def query_llm_for_generation(model_name, description):
+def query_llm_for_generation(model_name, file_name, description):
     llm = get_model(model_name)
     if not description or description == "":
-        description = "Please create a Hello World python script but instead of the script printing Hello World please print a joke about programming."
-    answer = prompt_model(llm, input=description)
+        description = "Please create a Hello World script but instead of the script printing Hello World please print a joke about programming."
+    answer = prompt_model(llm, input=f"{description} \n The file with the code will be named: {file_name}")
     return ModelResponse(answer)
