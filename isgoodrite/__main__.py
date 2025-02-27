@@ -1,6 +1,7 @@
 import subprocess
 import os
 import argparse
+import webbrowser
 
 from isgoodrite.query_model import query_llm_for_validation, query_llm_for_generation
 from isgoodrite.config import DEFAULT_CONFIG
@@ -62,6 +63,8 @@ def handle_args():
                         help='Print the content of the output file.')
     parser.add_argument('--bat', action='store_true',
                         help='BAT: Print the content of the output file with bat.')
+    parser.add_argument('--rick', '--easter-egg', action='store_true',
+                        help='Encode the output with strongly typed model defaults.')
     parser.add_argument('-m', '--model', type=str,
                         help=f'Specify which LLM model to use (default: {DEFAULT_CONFIG["DEFAULT_MODEL"]})',
                         default=DEFAULT_CONFIG["DEFAULT_MODEL"])
@@ -90,6 +93,9 @@ def main():
 
     if args.verbose:
         print(model_response.description)
+
+    if args.rick:
+        webbrowser.get().open_new("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
     write_file(output_file_name, model_response.code)
 
