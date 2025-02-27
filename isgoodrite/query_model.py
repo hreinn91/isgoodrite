@@ -3,12 +3,16 @@ import os
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 
+from isgoodrite.process_answer import ModelResponse
+
+
 def get_model(default_model, model_temperature=0):
     model_name = os.getenv('IS_GOOD_MODEL', default_model)
     print(f'Using model {model_name}')
     return ChatOllama(
         model=model_name,
-        temperature=model_temperature
+        temperature=model_temperature,
+        base_url="http://localhost:11434"
     )
 
 def prompt_model(llm, input):
@@ -29,8 +33,16 @@ def prompt_model(llm, input):
     )
     return ai_message.content
 
-def query_llm(file_name, file_content, model_name, description):
+def query_llm_for_validation(file_name, file_content, model_name, description):
     llm = get_model(model_name)
     if not description:
-        description = "Review it for me please"
-    return prompt_model(llm, input=f"I have code in a file named {file_name}. {description}: \n {file_content}")
+        description = "Review and validate it for me please"
+    answer = prompt_model(llm, input=f"I have code in a file named {file_name}. {description}: \n {file_content}")
+    return ModelResponse(answer)
+
+def query_llm_for_generation(model_name, description):
+    llm = get_model(model_name)
+    if not description or description == "":
+        description = "Please create a Hello World python script but instead of the script printing Hello World please print a joke about programming."
+    answer = prompt_model(llm, input=description)
+    return ModelResponse(answer)
